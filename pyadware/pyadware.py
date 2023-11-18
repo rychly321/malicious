@@ -5,6 +5,9 @@ import threading
 import yaml
 import os
 import random
+import ctypes
+
+
 
 class PyAdware:
 
@@ -17,10 +20,12 @@ class PyAdware:
             self.config = yaml.safe_load(config_file)
         
         #print(self.config['ad_texts'])
-        self.plyer_ads()
+        #self.run_ads()
+        self.show_message_box()
+        
         
 
-    def plyer_ads(self):
+    def run_ads(self):
 
         num_of_ads = len(self.config['ad_texts'])
         counter = 1
@@ -43,25 +48,46 @@ class PyAdware:
             # Display notification
             notification.notify(**notification_settings)
 
+  
+            
+
             # Keep the script running for a while (to see the notification)
             time.sleep(6)
             counter += 1
-           
+        
+    # Function to display a message box
+    def show_message_box(self):
+        
 
-    def tkinter_ads(self):
+        
+        num_of_ads = len(self.config['ad_texts'])
+        counter = 1
+        
         while True:
-            pass
-            # todo
 
-    def start_threads(self):
-        # Todo
-        pass
+            rand_pos = random.randint(0,num_of_ads-1)
+            # Set notification title and message
+            title = 'Important'
+            message = f"This is the {counter}. notification message.\n{self.config['ad_texts'][rand_pos]}"
+
+            ctypes.windll.user32.MessageBoxW(0, message, title, 1)
+  
+            
+
+            # Keep the script running for a while (to see the notification)
+            time.sleep(6)
+            counter += 1
+    
+
 
 # Example usage
 if __name__ == "__main__":
 
     # Create an instance of the class
     pyadware = PyAdware()
+
+
+
 
 
 
